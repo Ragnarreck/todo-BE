@@ -17,6 +17,6 @@ app.use((req, res) => {
 
 const routes = [notesRoutes, usersRoutes];
 
-app.listen(process.env.APP_PORT, () => console.log(`listen in port ${process.env.APP_PORT}`));
+app.listen(process.env.APP_PORT || 8080, () => console.log(`listen in port ${process.env.APP_PORT}`));
 
 routes.map(route => route(app, {}));
