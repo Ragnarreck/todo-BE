@@ -20,7 +20,10 @@ module.exports = {
 
     addUser(req, res) {
         currentDB.addUser(req.body)
-            .then(err => handleError(err, 400, res))
-            .catch(info => res.send(info));
+            .then(info => {
+                if (info.error) handleError(info.error, 400, res);
+                else res.send(info);
+            })
+            .catch(err => handleError(err, 400, res));
     }
 };

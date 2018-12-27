@@ -1,4 +1,4 @@
-const { pick, isNil, omitBy, head, get } = require('lodash');
+const { pick, omitBy, isNil, isEmpty, head, get } = require('lodash');
 const { Users } = require('../database/mongo_modules');
 
 module.exports = {
@@ -13,8 +13,14 @@ module.exports = {
     },
 
     addUser: params => Users.find({ login: get(params, 'login') })
-        .then(() => 'Sorry, user with the same login is already registered. Please, try with another login.')
-        .catch(() => new Users(
-            omitBy(pick(params, ['login', 'password']), isNil)
-        ).save()),
+        .then(res => {
+            if (isEmpty(res)) {
+                return new Users(
+                    omitBy(pick(params, ['login', 'password']), isNil)
+                ).save();
+            } else {
+                return { error: 'Sorry, user with the same login is already registered. Please, try with another login' };
+            }
+        })
+        .catch(() => 'Sorry, user with the same login is already registered. Please, try with another login.'),
 };
