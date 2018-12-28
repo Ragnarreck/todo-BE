@@ -9,15 +9,10 @@ require('dotenv').config();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use((req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-});
 
 const routes = [notesRoutes, usersRoutes];
 
-const port = process.env.APP_PORT || 33500;
+const port = process.env.APP_PORT || 8080;
 app.listen(port, () => console.log(`listen in port ${port}`));
 
 routes.map(route => route(app, {}));
