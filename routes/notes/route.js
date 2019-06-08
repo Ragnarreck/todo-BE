@@ -7,4 +7,5 @@ module.exports = (app)  => {
   app.post('/note', controllers.addNote);
   app.put('/note/:id', controllers.updateNote);
   app.delete('/note/:id', controllers.removeNote);
+  app.get('/test', controllers.test);
 };
